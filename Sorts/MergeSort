@@ -1,0 +1,68 @@
+package Sorts;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Merge_Sort {
+    private static void Merge(int[] arr,int[] l,int[] r,int left,int right){
+        int i = 0,j = 0,k = 0;
+
+        while (i < l.length && j < r.length) {
+            if(l[i] <= r[j]) {
+                arr[k] = l[i];
+                i ++;
+            }else {
+                arr[k] = r[j];
+                j ++;
+            }
+            k ++;
+        }
+        while (i < left) {
+            arr[k] = l[i];
+            i ++;
+            k ++;
+        }
+        while (j < right) {
+            arr[k] = r[j];
+            j ++;
+            k ++;
+        }
+    }
+    private static void MergeSort(int[] arr) {
+        if(arr.length < 2) {
+            return;
+        }
+
+        int len = arr.length;
+        int mid = len / 2;
+
+        int[] left = new int[mid];
+        int[] right = new int[len - mid];
+
+        for(int i = 0;i < arr.length;i ++) {
+            if(i < mid) {
+                left[i] = arr[i];
+            }else {
+                right[i - mid] = arr[i];
+            }
+        }
+
+        MergeSort(left);
+        MergeSort(right);
+        Merge(arr,left,right,mid,len - mid);
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the size of the array: ");
+        int size = sc.nextInt();
+        int[] arr = new int[size];
+        System.out.println("Enter the elements of the array: ");
+        for(int i = 0;i < size;i ++) {
+            arr[i] = sc.nextInt();
+        }
+        MergeSort(arr);
+        for(int i = 0;i < size;i ++) {
+            System.out.print(arr[i] + " ");
+        }
+    }
+}

@@ -1,0 +1,107 @@
+package Trees.BinaryTree;
+
+
+import java.util.Stack;
+
+public class Tree {
+    Node root;
+    public void add(int value) {
+        root = addRecursive(root,value);
+    }
+    public boolean containsNode(int value) {
+        return containsNodeRecursive(root, value);
+    }
+
+    public void delete(int value) {
+        root = deleteNodeRecursive(root, value);
+    }
+    private Node addRecursive(Node current,int value) {
+        if(current == null) {
+            return new Node(value);
+        }
+        if(value < current.getValue()) {
+            current.left = addRecursive(current.left,value);
+        } else if (value > current.getValue()) {
+            current.right = addRecursive(current.right, value);
+        } else {
+            return current;
+        }
+        return current;
+    }
+    private boolean containsNodeRecursive(Node current, int value) {
+        if(current == null) {
+            return  false;
+        }
+        if(value == current.getValue()) {
+            return true;
+        }
+        return value < current.getValue() ? containsNodeRecursive(current.getLeft(),value) : containsNodeRecursive(current.getRight(), value);
+    }
+    private Node deleteNodeRecursive(Node current,int value) {
+        if(current == null) {
+            return null;
+        }
+        if(value == current.getValue()) {
+            if(current.getLeft() == null && current.getRight() == null) {
+                return null;
+            }else if(current.getRight() == null) {
+                return current.getLeft();
+            }else if(current.getLeft() == null) {
+                return current.right;
+            }else {
+                int smallestValue = findSmallestValue(current.getRight());
+                current.setValue(smallestValue);
+                current.setRight(deleteNodeRecursive(current.getRight(),smallestValue));
+                return current;
+            }
+        }
+        if(value < current.getValue()) {
+            current.setLeft(deleteNodeRecursive(current.getLeft(), value));
+            return current;
+        }
+        current.setRight(deleteNodeRecursive(current.getRight(), value));
+        return current;
+    }
+    private int findSmallestValue(Node root) {
+        return root.getLeft() == null ? root.getValue() : findSmallestValue(root.getLeft());
+    }
+
+    public void printTree() {
+        Stack globalStack = new Stack();
+        globalStack.push(root);
+        int gaps = 32;
+        boolean isRowEmpty = false;
+        String separator = "-----------------------------------------------------------------";
+        System.out.println(separator);
+        while (isRowEmpty == false) {
+            Stack localStack = new Stack();
+            isRowEmpty = true;
+
+            for (int j = 0; j < gaps; j++)
+                System.out.print(' ');
+            while (globalStack.isEmpty() == false) {
+                Node temp = (Node) globalStack.pop();
+                if (temp != null) {
+                    System.out.print(temp.getValue());
+                    localStack.push(temp.getLeft());
+                    localStack.push(temp.getRight());
+                    if (temp.getLeft() != null ||
+                            temp.getRight() != null)
+                        isRowEmpty = false;
+                }
+                else {
+                    System.out.print("__");
+                    localStack.push(null);
+                    localStack.push(null);
+                }
+                for (int j = 0; j < gaps * 2 - 2; j++)
+                    System.out.print(' ');
+            }
+            System.out.println();
+            gaps /= 2;
+            while (localStack.isEmpty() == false)
+                globalStack.push(localStack.pop());
+        }
+        System.out.println(separator);
+    }
+}

@@ -1,0 +1,28 @@
+package Algorithms.BFS;
+
+
+public class Vertex {
+    private char name;//имя графа
+    private boolean isVisited;//был ли граф посещен или нет
+
+    public Vertex(char name) {
+        this.name = name;
+        this.isVisited = false;
+    }
+
+    public void setName(char name) {
+        this.name = name;
+    }
+
+    public void setVisited(boolean visited) {
+        isVisited = visited;
+    }
+
+    public char getName() {
+        return name;
+    }
+
+    public boolean isVisited() {
+        return isVisited;
+    }
+}

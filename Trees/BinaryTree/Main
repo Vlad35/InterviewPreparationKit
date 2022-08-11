@@ -1,0 +1,21 @@
+package Trees.BinaryTree;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Tree tree = new Tree();
+        tree.add(6);
+        tree.add(4);
+        tree.add(8);
+        tree.add(3);
+        tree.add(5);
+        tree.add(7);
+        tree.add(9);
+        tree.printTree();
+        tree.delete(4);
+        tree.delete(8);
+        tree.printTree();
+    }
+}

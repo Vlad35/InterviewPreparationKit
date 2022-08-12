@@ -1,0 +1,119 @@
+package Trees.HeapTree;
+
+import java.lang.ref.Cleaner;
+
+public class HeapTree {
+    private Node[] heapArray;
+    private int maxSize;
+    private int currentSize;
+
+    public HeapTree(int maxSize) {
+        this.maxSize = maxSize;
+        this.currentSize = 0;
+        heapArray = new Node[maxSize];
+    }
+
+    public boolean insertNode(int value) {
+        if(currentSize == maxSize) {
+            return false;
+        }
+        Node newNode = new Node(value);
+        heapArray[currentSize] = newNode;
+        displaceUp(currentSize++);
+        return true;
+    }
+
+    public Node removeNode(int index) {
+        if(index > 0 && currentSize > index) {
+            Node root = heapArray[index];
+            heapArray[index] = heapArray[--currentSize];
+            heapArray[currentSize] = null;
+            displaceDown(index);
+            return root;
+        }
+        return null;
+    }
+
+    public boolean changeNode(int index,int newValue) {
+        if(index < 0 || currentSize <= index) {
+            return false;
+        }
+        int oldValue = heapArray[index].getValue();
+        heapArray[index].setValue(newValue);
+        if(oldValue < newValue) {
+            displaceUp(index);
+        }else if(oldValue > newValue){
+            displaceDown(index);
+        }
+        return true;
+    }
+
+    private void displaceUp(int index) {
+        int parentIndex = (index - 1) / 2;
+        Node bottom  = heapArray[index];
+        while (index > 0 && heapArray[parentIndex].getValue() < bottom.getValue()) {
+            heapArray[index] = heapArray[parentIndex];
+            index = parentIndex;
+            parentIndex = (parentIndex - 1) / 2;
+        }
+        heapArray[index] = bottom;
+    }
+
+    private void displaceDown(int index) {
+        int largerChild;
+        Node top = heapArray[index];
+        while (index < currentSize / 2) {
+            int leftChild = 2 * index + 1;
+            int rightChild = leftChild + 1;
+
+            if(rightChild < currentSize && heapArray[leftChild].getValue() < heapArray[rightChild].getValue()) {
+                largerChild = rightChild;
+            }else {
+                largerChild = leftChild;
+            }
+
+            if(top.getValue() >= heapArray[largerChild].getValue()) {
+                break;
+            }
+            heapArray[index] = heapArray[largerChild];
+            index = largerChild;
+        }
+        heapArray[index] = top;
+    }
+
+    public void printHeap() {
+        System.out.println("Массив значений: ");
+        for(int i = 0;i < currentSize;i ++) {
+            if(heapArray[i] != null) {
+                System.out.print(heapArray[i].getValue() + " ");
+            }else {
+                System.out.println("-_-");
+            }
+        }
+        System.out.println();
+        int countOfGaps = 32;
+        int itemsPerRow = 1;
+        int coliumnNumber = 0;
+        String lines = "___________________________________________________________________";
+        System.out.println(lines);
+        for(int i = 0;i < currentSize;i ++) {
+            if(coliumnNumber == 0) {
+                for(int k = 0;k < countOfGaps;k ++) {
+                    System.out.print(' ');
+                }
+            }
+            System.out.print(heapArray[i].getValue());
+            if(++coliumnNumber == itemsPerRow) {
+                countOfGaps /= 2;
+                itemsPerRow *= 2;
+                coliumnNumber = 0;
+                System.out.println();
+            }else {
+                for(int k = 0;k < countOfGaps * 2 - 2;k ++) {
+                    System.out.print(' ');
+                }
+            }
+        }
+        System.out.println("\n" + lines);
+    }
+}

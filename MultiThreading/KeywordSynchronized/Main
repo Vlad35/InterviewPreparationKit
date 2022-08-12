@@ -1,1 +1,20 @@
+package MultiThreading.KeywordSynchronized;
 
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        Scanner sc = new Scanner(System.in);
+        Resource resource = new Resource();
+        resource.setI(5);
+        MySynchronizedThread mySynchronizedThread = new MySynchronizedThread();
+        MySynchronizedThread mySynchronizedThread1 = new MySynchronizedThread();
+        mySynchronizedThread.setResource(resource);
+        mySynchronizedThread1.setResource(resource);
+        mySynchronizedThread.start();
+        mySynchronizedThread1.start();
+        mySynchronizedThread.join();
+        mySynchronizedThread1.join();
+        System.out.println(resource.getI());
+    }
+}

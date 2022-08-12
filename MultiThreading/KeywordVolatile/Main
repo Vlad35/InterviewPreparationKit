@@ -1,1 +1,14 @@
-1
+package MultiThreading.KeywordVolatile;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        MyVolatileThread myVolatileThread = new MyVolatileThread();
+        myVolatileThread.start();
+        sc.nextLine();//To make a ShutDown when pressing a button Enter
+                      //Because of cache coherence, it may not work,so we use keyword volatile to bypass it:)
+        myVolatileThread.shutDown();
+    }
+}

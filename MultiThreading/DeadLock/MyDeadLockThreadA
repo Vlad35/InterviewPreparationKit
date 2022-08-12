@@ -1,0 +1,10 @@
+package MultiThreading.DeadLock;
+
+public class MyDeadLockThreadA extends Thread{
+    ResourceA resourceA;
+
+    @Override
+    public void run() {
+        System.out.println(resourceA.getI());
+    }
+}

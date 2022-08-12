@@ -1,0 +1,21 @@
+package MultiThreading.BasicOperationsOnThread;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws InterruptedException {
+        Scanner sc  = new Scanner(System.in);
+        System.out.println("I am going to sleep:(");
+        MyThread myThread = new MyThread();
+        myThread.start();
+        MyThread myThread1 = new MyThread();
+        myThread1.start();
+        System.out.println("Hello from Main Thread!");
+        Thread.sleep(3000);
+        System.out.println("I am awake:D");
+        Thread thread = new Thread(new MyRunnableThread());
+        thread.start();
+        System.out.println("Hello from Main Thread!");
+    }
+}
+

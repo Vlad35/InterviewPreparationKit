@@ -1,0 +1,52 @@
+package Sorts;
+
+import java.util.Scanner;
+
+public class HeapSort {
+    private static void HeapSort(int[] arr) {
+        int len = arr.length;
+        for(int i = len / 2 - 1;i >= 0;i --) {
+            heapify(arr,i,len);
+        }
+        for(int i = len - 1;i >= 0;i --) {
+            int temp = arr[i];
+            arr[i] = arr[0];
+            arr[0] = temp;
+
+            heapify(arr,0,i);
+        }
+    }
+    private static void heapify(int[] arr,int i,int len) {
+        int l = i * 2 + 1;
+        int r = i * 2 + 2;
+        int largest = i;
+
+        if(l < len && arr[l] > arr[largest]) {
+            largest = l;
+        }
+        if(r < len && arr[r] > arr[largest]) {
+            largest = r;
+        }
+        if(i != largest) {
+            int temp = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = temp;
+
+            heapify(arr,largest,len);
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the size of the array: ");
+        int size = sc.nextInt();
+        int[] arr = new int[size];
+        System.out.println("Enter the elements of the array: ");
+        for(int i = 0;i < size;i ++) {
+            arr[i] = sc.nextInt();
+        }
+        HeapSort(arr);
+        for(int i = 0;i < arr.length;i ++) {
+            System.out.print(arr[i] + " ");
+        }
+    }
+}

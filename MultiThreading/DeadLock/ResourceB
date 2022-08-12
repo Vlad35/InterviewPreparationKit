@@ -1,0 +1,11 @@
+package MultiThreading.DeadLock;
+
+public class ResourceB {
+    ResourceA resourceA;
+    public synchronized char getI() {
+        return resourceA.returnI();
+    }
+    public synchronized char returnI() {
+        return 'B';
+    }
+}

@@ -1,1 +1,30 @@
 
+package Trees.HeapTree;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        HeapTree heapTree = new HeapTree(33);
+        heapTree.insertNode(120);
+        heapTree.insertNode(40);
+        heapTree.insertNode(50);
+        heapTree.insertNode(80);
+        heapTree.insertNode(20);
+        heapTree.insertNode(100);
+        heapTree.insertNode(150);
+        heapTree.insertNode(30);
+        heapTree.insertNode(210);
+        heapTree.insertNode(180);
+        heapTree.insertNode(10);
+        heapTree.insertNode(90);
+        heapTree.printHeap();
+        System.out.println();
+        heapTree.changeNode(0,15);
+        heapTree.printHeap();
+        System.out.println();
+        heapTree.removeNode(3);
+        heapTree.printHeap();
+    }
+}

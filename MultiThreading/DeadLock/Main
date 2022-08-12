@@ -1,1 +1,22 @@
+package MultiThreading.DeadLock;
 
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        //We are locked,so cannot get method returnI(),and when ResourceB.getI() method is asking for resourceA.returnI() method, we are just waiting(what else can we do).Later it will turn around,that we were waiting forever.
+        ResourceA resourceA = new ResourceA();
+        ResourceB resourceB = new ResourceB();
+        resourceA.resourceB = resourceB;
+        resourceB.resourceA = resourceA;
+        MyDeadLockThreadA myDeadLockThreadA = new MyDeadLockThreadA();
+        MyDeadLockThreadB myDeadLockThreadB = new MyDeadLockThreadB();
+        myDeadLockThreadA.resourceA = resourceA;
+        myDeadLockThreadB.resourceB = resourceB;
+        myDeadLockThreadA.start();
+        myDeadLockThreadB.start();
+        //Now we have a chance to get DeadLock Situation
+        //We cannot get out of DeadLock,just restarting a Program or stopping it.
+    }
+}

@@ -1,0 +1,49 @@
+package MultiThreading.KeywordSynchronized;
+
+public class Resource {
+    private int i;
+
+    public int getI() {
+        return i;
+    }
+
+    public void setI(int i) {
+        this.i = i;
+    }
+
+    public synchronized void changeI() {//For not getting a result 6 we should use keyword synchronized
+        int i = this.i;
+        i ++;
+        this.i = i;
+    }
+//How it should work:
+    //thread 1:
+    //int i = this.i
+    //i = 5;
+    //thread 2:
+    //int i = this.i
+    //i = 5
+    //thread 1:
+    //i = 5
+    //i ++
+    //thread 2:
+    //i = 6
+    //i ++;
+    //i = 7;
+//How it may work:
+    //thread 1:
+    //int i = this.i
+    //i = 5;
+    //thread 2:
+    //int i = this.i;
+    //thread 2: i = 5
+    //i ++;
+    //thread 2: i = 6
+    //this.i = i;
+    //i = 6;
+    //thread 1:
+    //i = 5;
+    //i ++;
+    //i = 6;
+    //this.i = i;//i = 6
+}
